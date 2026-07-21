@@ -1,0 +1,162 @@
+//31. Creating Microservices for Account and Loan (Spring Boot 3)
+Project Structure-
+account-service
+loan-service
+1.Account Service
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+</dependencies>
+package com.example.account.model;
+
+public class Account {
+
+    private int accountNumber;
+    private String accountHolder;
+    private double balance;
+
+    public Account() {}
+
+    public Account(int accountNumber, String accountHolder, double balance) {
+        this.accountNumber = accountNumber;
+        this.accountHolder = accountHolder;
+        this.balance = balance;
+    }
+
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(int accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public String getAccountHolder() {
+        return accountHolder;
+    }
+
+    public void setAccountHolder(String accountHolder) {
+        this.accountHolder = accountHolder;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+}
+package com.example.account.controller;
+
+import com.example.account.model.Account;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/account")
+public class AccountController {
+
+    @GetMapping("/{id}")
+    public Account getAccount(@PathVariable int id) {
+
+        return new Account(id, "Varshitha", 50000);
+    }
+}
+server.port=8081
+spring.application.name=ACCOUNT-SERVICE
+2.Loan Service
+package com.example.loan.model;
+
+public class Loan {
+
+    private int loanId;
+    private String loanType;
+    private double amount;
+
+    public Loan() {}
+
+    public Loan(int loanId, String loanType, double amount) {
+        this.loanId = loanId;
+        this.loanType = loanType;
+        this.amount = amount;
+    }
+
+    public int getLoanId() {
+        return loanId;
+    }
+
+    public void setLoanId(int loanId) {
+        this.loanId = loanId;
+    }
+
+    public String getLoanType() {
+        return loanType;
+    }
+
+    public void setLoanType(String loanType) {
+        this.loanType = loanType;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+}
+package com.example.loan.controller;
+
+import com.example.loan.model.Loan;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/loan")
+public class LoanController {
+
+    @GetMapping("/{id}")
+    public Loan getLoan(@PathVariable int id) {
+
+        return new Loan(id, "Home Loan", 800000);
+    }
+}
+server.port=8082
+spring.application.name=LOAN-SERVICE
+package com.example.account;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class AccountServiceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AccountServiceApplication.class, args);
+    }
+}package com.example.account;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class AccountServiceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AccountServiceApplication.class, args);
+    }
+}
+//OUTPUTS
+Account-
+{
+  "accountNumber":101,
+  "accountHolder":"Varshitha",
+  "balance":50000.0
+}
+Loan-
+{
+  "loanId":201,
+  "loanType":"Home Loan",
+  "amount":800000.0
+}
